@@ -1,0 +1,43 @@
+<html>
+<head>
+<title></title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        $(document). ready(function (){
+            // this triggers the connection event in our server!
+            var socket  = io.connect();
+            // we'll write all the socket stuff after the above line!
+            $( '#epic').click(function (){
+                socket.emit( "blue_button_clicked", {reason:  "I want to be epic!"});
+            });
+            $( '#reset').click(function (){
+                socket.emit( "red_button_clicked", {reason:  "Let's do it again!"});
+            });
+            socket.on( 'update_count', function (data){
+                document.getElementById('count').innerHTML = data;
+            });
+        })
+    </script>
+</head>
+<body>
+    <div class='container'>
+        <h3 id='count'>The button has been pushed 0 time(s)</h3>
+        <p>Push the button to update the count!</p>
+        <button class='btn btn-outline-primary btn-lg' id='epic'>Push the EPIC button</button>
+        <hr>
+        <button class='btn btn-outline-danger btn-sm' id='reset'>Reset count</button>
+    </div>
+    <!-- web page goes here -->
+</body>
+</html>
